@@ -16,6 +16,7 @@ function toTitleCase(str)
 function check_closing_interval()
 {
     let new_length=shared_functions.pokemon_list.length;
+    pokemon_list=[...shared_functions.pokemon_list];
     if(last_length==new_length)
     {
         clearInterval(checkin_interval);
@@ -58,33 +59,35 @@ function generate_table_head()
 }
 function sort_pokemon(column,ascending)
 {
-    if(typeof shared_functions.pokemon_list[0][column]=== "string")
+    let sorted_pokemon=[...pokemon_list];
+    if(typeof sorted_pokemon[0][column]=== "string")
     {
         if(ascending==true)
         {
-            shared_functions.pokemon_list=shared_functions.pokemon_list.sort((a, b) => b[column].localeCompare(a[column]));
+            sorted_pokemon=sorted_pokemon.sort((a, b) => b[column].localeCompare(a[column]));
         }
         else
         {
-            shared_functions.pokemon_list=shared_functions.pokemon_list.sort((a, b) => a[column].localeCompare(b[column]));
+            sorted_pokemon=sorted_pokemon.sort((a, b) => a[column].localeCompare(b[column]));
         }
     }
     else
     {
         if(ascending==true)
         {
-            shared_functions.pokemon_list=shared_functions.pokemon_list.sort((a, b) => b[column] - a[column]);
+            sorted_pokemon=sorted_pokemon.sort((a, b) => b[column] - a[column]);
         }
         else
         {
-            shared_functions.pokemon_list=shared_functions.pokemon_list.sort((a, b) => a[column] - b[column]); 
+            sorted_pokemon=sorted_pokemon.sort((a, b) => a[column] - b[column]); 
         }
     }
+    pokemon_list=sorted_pokemon;
     generate_table();
 }
 function filter_pokemon()
 {
-    let filtered_pokemon_list=[...shared_functions.pokemon_list];
+    let filtered_pokemon_list=[...pokemon_list];
     console.log(filtered_pokemon_list);
     
     
@@ -108,7 +111,7 @@ function generate_table()
 {
     tbody.innerHTML="";
     let filtered_pokemon_list=filter_pokemon();
-    console.log(shared_functions.pokemon_list.length+" "+filtered_pokemon_list.length);
+    console.log(pokemon_list.length+" "+filtered_pokemon_list.length);
     for(let pokemon of filtered_pokemon_list)
     {
         let tr=document.createElement("tr");
@@ -169,4 +172,5 @@ generate_table_head();
 shared_functions.get_names();
 
 let last_length=0;
+let pokemon_list=[];
 let checkin_interval=setInterval(check_closing_interval,1000);

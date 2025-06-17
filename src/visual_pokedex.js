@@ -15,6 +15,7 @@ function toTitleCase(str)
 function check_closing_interval()
 {
     let new_length=shared_functions.pokemon_list.length;
+    pokemon_list=[...shared_functions.pokemon_list];
     if(last_length==new_length)
     {
         clearInterval(checkin_interval);
@@ -29,7 +30,7 @@ function check_closing_interval()
 function generate_table()
 {  
     console.log("Generating Table");
-    console.log(shared_functions.pokemon_list);
+    console.log(pokemon_list);
 
     results_div.innerHTML="";
     let table=null;
@@ -37,7 +38,7 @@ function generate_table()
     let generation="START";
     pokemon_within_generation=0;
 
-    for(let pokemon of shared_functions.pokemon_list)
+    for(let pokemon of pokemon_list)
     {
         if(pokemon.True_Generation!=generation)
         {
@@ -88,6 +89,8 @@ let pokemon_per_row=5;
 const results_div=document.getElementById("results");
 let table=null;
 let tr=null;
+
+let pokemon_list=[];
 
 shared_functions.get_names();
 let last_length=0;
