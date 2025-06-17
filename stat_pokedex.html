@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link href="/src/mystyle.css" type="text/css" rel="stylesheet">
+        <title>Poke API Pokemon Stats</title>
+    </head>
+    <body>
+    <h1>Node Poke API</h1>
+    <nav>
+    <a href="index.html">Visual Pokedex</a>
+    <a href="stat_pokedex.html">Stat Pokedex</a>
+    <a href="pokedex_canvas.html">Pokedex Canvas</a>
+    </nav>
+    <h1>Stat Pokedex</h1>
+    <form>
+    <label for="target_type">Type</label>
+    <select id="target_type">
+      
+    </select>
+        
+    <div class="block">
+    <label for="min_hp">Min HP</label>
+    <input type="range" min=0 max=255 step=5 value=0 id="min_hp">
+    <b id="min_hp_value">0</b>
+    </div>
+    
+    <div class="block">
+    <label for="min_attack">Min Attack</label>
+    <input type="range" min=0 max=181 step=5 value=0 id="min_attack">
+    <b id="min_attack_value">0</b>
+    </div>
+    
+    <div class="block">
+    <label for="min_defense">Min Defense</label>
+    <input type="range" min=0 max=230 step=5 value=0 id="min_defense">
+    <b id="min_defense_value">0</b>
+    </div>
+    
+    <div class="block">
+    <label for="min_special_attack">Min Special Attack</label>
+    <input type="range" min=0 max=173 step=5 value=0 id="min_special_attack">
+    <b id="min_special_attack_value">0</b>
+    </div>
+        
+    <div class="block">
+    <label for="min_special_defense">Min Special Defense</label>
+    <input type="range" min=0 max=230 step=5 value=0 id="min_special_defense">
+    <b id="min_special_defense_value">0</b>
+    </div>
+        
+    <div class="block">
+    <label for="min_speed">Min Speed</label>
+    <input type="range" min=0 max=200 step=5 value=0 id="min_speed">
+    <b id="min_speed_value">0</b>
+    </div>
+        
+    <div class="block">
+    <label for="min_total">Min Total</label>
+    <input type="range" min=0 max=720 step=15 value=0 id="min_total">
+    <b id="min_total_value">0</b>
+    </div>
+        
+    <div class="block">
+    <label for="min_best_attack">Min Best Attack</label>
+    <input type="range" min=0 max=181 step=5 value=0 id="min_best_attack">
+    <b id="min_best_attack_value">0</b>
+    </div>
+    </form>
+    <div id="results"></div>
+    <script type="module" src="/src/stat_pokedex.js"></script>
+    <script type="module">
+    import {update_values} from "/src/stat_pokedex.js";
+
+    let types=["All","Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
+        
+    for(let type of types)
+    {
+        let option=document.createElement("option");
+        option.value=type.toLowerCase();
+        option.innerHTML=type;
+        
+        document.getElementById("target_type").appendChild(option);
+    }
+        
+    document.getElementById('min_hp').addEventListener('change', update_values);
+    document.getElementById('min_attack').addEventListener('change', update_values);
+    document.getElementById('min_defense').addEventListener('change', update_values);
+    document.getElementById('min_special_attack').addEventListener('change', update_values);
+    document.getElementById('min_special_defense').addEventListener('change', update_values);
+    document.getElementById('min_speed').addEventListener('change', update_values);
+    document.getElementById('min_total').addEventListener('change', update_values);
+    document.getElementById('min_best_attack').addEventListener('change', update_values);
+    document.getElementById('target_type').addEventListener('change', update_values);
+    </script>
+    </body>
+</html>

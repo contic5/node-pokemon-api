@@ -1,0 +1,18 @@
+table,th,td
+{
+    border-collapse: collapse;
+}
+td,th
+{
+    padding:5px;
+    border: black solid 2px;
+    min-width: 100px;
+}
+.no_margin
+{
+    margin: 0px;
+}
+.block
+{
+    display:block;
+}

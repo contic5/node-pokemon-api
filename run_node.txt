@@ -1,0 +1,9 @@
+MAKE SURE THAT I AM IN A REGULAR TERMINAL INSTEAD OF WINDOWS POWERSHEELL
+
+cd "C:\Users\CJ\Documents\My Projects\Node_Poke_API"
+npm install --save-dev vite
+npm install pokedex-promise-v2 --save
+npm install events --save
+
+cd "C:\Users\CJ\Documents\My Projects\Node_Poke_API"
+npx vite
