@@ -1,5 +1,6 @@
 import Pokedex from 'pokedex-promise-v2';
 import * as shared_data from '/src/shared_data.js';
+import { color_hues } from './shared_data';
 
 const P = new Pokedex();
 let names=[];
@@ -25,9 +26,9 @@ export async function start_collecting_data()
 {
     await get_names();
 	await get_all_pokemon();
-	await get_all_pokemon_species();
+	//await get_all_pokemon_species();
 	done=true;
-	await all_colors_to_variable();
+	//await all_colors_to_variable();
 }
 async function all_colors_to_variable()
 {
@@ -68,8 +69,8 @@ export function get_pokemon_data(response)
         pokemon.species_url=item.species_url;
 		pokemon.img_src=item.sprites.front_default;
 
-		pokemon.color="BLANK";
-		pokemon.color_hue=-1;
+		pokemon.color=shared_data.pokemon_colors[pokemon_list.length];
+		pokemon.color_hue=shared_data.color_hues[pokemon.color];
 
 		let parts=item.species.url.split("/");
 		let pokedex_number=parts[parts.length-2];
