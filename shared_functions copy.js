@@ -5,7 +5,6 @@ const P = new Pokedex();
 let names=[];
 export let pokemon_list=[];
 let pokemon_index=0;
-export let done=false;
 
 function toTitleCase(str) 
 {
@@ -24,38 +23,24 @@ export function prepare_stat_name(stat_name)
 export async function start_collecting_data()
 {
     await get_names();
-	await get_all_pokemon();
-	await get_all_pokemon_species();
-	done=true;
-	await all_colors_to_variable();
-}
-async function all_colors_to_variable()
-{
-	let colors=[];
-	for(let pokemon of pokemon_list)
-	{
-		colors.push(pokemon.color)
-	}
-	console.log(pokemon_list.length);
-	console.log(colors);
 }
 export async function get_names()
 {
-	console.log("Get names started");
 	const interval = {
 	limit: 10000,
 	offset: 0
 	};
 	
-	const response=await P.getPokemonsList(interval)
-			
-    for(let result of response.results)
-    {
-        names.push(result.name);
-    }
-    //console.log(names);
-	console.log("Get names finished");
-    
+	P.getPokemonsList(interval)
+		.then((response) => {
+			//console.log(response);
+			for(let result of response.results)
+			{
+				names.push(result.name);
+			}
+		//console.log(names);
+		get_all_pokemon();
+	});
 }
 export function get_pokemon_data(response)
 {
@@ -64,12 +49,8 @@ export function get_pokemon_data(response)
 	{
 		let pokemon={};
 		pokemon.Name=toTitleCase(item.forms[0].name.replace("-"," "));
-		pokemon.Species_Name=(item.species.name);
         pokemon.species_url=item.species_url;
 		pokemon.img_src=item.sprites.front_default;
-
-		pokemon.color="BLANK";
-		pokemon.color_hue=-1;
 
 		let parts=item.species.url.split("/");
 		let pokedex_number=parts[parts.length-2];
@@ -81,14 +62,6 @@ export function get_pokemon_data(response)
 			pokemon.Pokemon_ID=pokemon_index;
 		}
 		pokemon.True_ID=item.id;
-		if(pokemon.True_ID>1025)
-		{
-			pokemon.alternate_form=true;
-		}
-		else
-		{
-			pokemon.alternate_form=false;
-		}
 		
 		pokemon.Generation="Other Forms";
 		for(let i=0;i<shared_data.national_pokedex_sizes.length;i++)
@@ -148,7 +121,7 @@ export function get_pokemon_data(response)
 }
 export async function get_all_pokemon()
 {
-    console.log("get all pokemon started");
+    console.log("GETTING ALL POKEMON");
     for(let pokemon_index=0;pokemon_index<names.length;pokemon_index++)
     {
         //console.log(`${pokemon_index} ${names.length}`)
@@ -162,30 +135,4 @@ export async function get_all_pokemon()
         });
     }
     console.log(pokemon_list);
-    console.log("get all pokemon finished");
-}
-export function get_pokemon_species_data(response,pokemon_index)
-{
-	for(let item of response)
-	{
-		pokemon_list[pokemon_index].color=item.color.name;
-		pokemon_list[pokemon_index].color_hue=shared_data.color_hues[item.color.name];
-	}
-}
-export async function get_all_pokemon_species()
-{
-	console.log("get all pokemon species started");
-    for(let pokemon_index=0;pokemon_index<pokemon_list.length;pokemon_index++)
-    {
-        //console.log(`${pokemon_index} ${names.length}`)
-        await P.getPokemonSpeciesByName([pokemon_list[pokemon_index].Species_Name]) // with Promise
-        .then((response) => 
-            {
-                get_pokemon_species_data(response,pokemon_index);
-            })
-        .catch((error) => {
-            console.log('There was an ERROR: ', error);
-        });
-    }
-    console.log("get all pokemon species finished");
 }

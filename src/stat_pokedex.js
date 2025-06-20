@@ -15,16 +15,11 @@ function toTitleCase(str)
 }
 function check_closing_interval()
 {
-    let new_length=shared_functions.pokemon_list.length;
     pokemon_list=[...shared_functions.pokemon_list];
-    if(last_length==new_length)
+    if(shared_functions.done)
     {
         clearInterval(checkin_interval);
         //setTimeout(check_closing_interval,1000);
-    }
-    else
-    {
-        last_length=new_length;
     }
     generate_table();
 }
@@ -169,8 +164,7 @@ let thead=document.createElement("thead");
 table.appendChild(thead);
 generate_table_head();
 
-shared_functions.get_names();
+shared_functions.start_collecting_data();
 
-let last_length=0;
 let pokemon_list=[];
 let checkin_interval=setInterval(check_closing_interval,1000);

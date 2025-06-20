@@ -14,16 +14,11 @@ function toTitleCase(str)
 }
 function check_closing_interval()
 {
-    let new_length=shared_functions.pokemon_list.length;
     pokemon_list=[...shared_functions.pokemon_list];
-    if(last_length==new_length)
+    if(shared_functions.done)
     {
         clearInterval(checkin_interval);
-        setTimeout(check_closing_interval,1000);
-    }
-    else
-    {
-        last_length=new_length;
+        //setTimeout(check_closing_interval,1000);
     }
     generate_table();
 }
@@ -71,7 +66,7 @@ function generate_table()
         
         let p=document.createElement("p");
         td.appendChild(p);
-        p.innerHTML=pokemon.Name;
+        p.innerHTML=pokemon.Name+" "+pokemon.color;
         
         if(img.src!=null)
         {
@@ -92,6 +87,5 @@ let tr=null;
 
 let pokemon_list=[];
 
-shared_functions.get_names();
-let last_length=0;
+shared_functions.start_collecting_data();
 let checkin_interval=setInterval(check_closing_interval,1000);
